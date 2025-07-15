@@ -94,8 +94,11 @@ const data = [
   // --- 10° Semestre ---
   { nombre: "Práctica Docente Final 2", sigla: "PRA701-56", semestre: 10, tipo: "linea-practica", creditos: 16, prerequisitos: ["PRA601-56"] }
 ];
-const aprobados = new Set();
-
+function aprobarRamo(sigla) {
+  aprobados.add(sigla);
+  localStorage.setItem('aprobados', JSON.stringify([...aprobados]));
+  renderMalla();
+}
 function renderMalla() {
   const contenedor = document.getElementById("malla");
   contenedor.innerHTML = "";
