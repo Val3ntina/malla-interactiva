@@ -58,7 +58,7 @@ const data = [
   { nombre: "Inglés 3", sigla: "ING9003", semestre: 6, tipo: "ingles", creditos: 2, prerequisitos: ["ING9002"] },
   { nombre: "Formación Fundamental 3", sigla: "FF3", semestre: 6, tipo: "fundamental", creditos: 2, prerequisitos: [] },
 
-   // --- 7° Semestre ---
+  // --- 7° Semestre ---
   { nombre: "Construcción del Conocimiento de las Ciencias Naturales en Educación Parvularia", sigla: "EPA1169", semestre: 7, tipo: "disciplinar", creditos: 2, prerequisitos: ["EPA1150"] },
   { nombre: "Construcción del Conocimiento de las Ciencias Sociales en Educación Parvularia", sigla: "EPA1170", semestre: 7, tipo: "disciplinar", creditos: 2, prerequisitos: ["EPA1150"] },
   { nombre: "Evaluación del y para el Aprendizaje", sigla: "EPE1302", semestre: 7, tipo: "fundamental", creditos: 3, prerequisitos: ["EPE1303"] },
@@ -76,7 +76,7 @@ const data = [
   { nombre: "Taller de Integración Curricular 6: Transiciones Educativas desde la Lúdica", sigla: "EPA1173", semestre: 8, tipo: "linea-practica", creditos: 2, prerequisitos: ["EPA1168"] },
   { nombre: "Inglés 4", sigla: "ING9004", semestre: 8, tipo: "ingles", creditos: 2, prerequisitos: ["ING9003"] },
 
-   // --- 9° Semestre ---
+  // --- 9° Semestre ---
   { nombre: "Trabajo de Titulación", sigla: "EPA1401", semestre: 9, tipo: "titulación", creditos: 6, prerequisitos: [
     "ING9004","EPA1173","EPE1400","EPA1172","EPA1250","EPA1255","EPE1342",
     "EPE1130","EPA1344","EPA1171","EPE1302","EPA1170","EPA1169","EPE1132",
@@ -94,19 +94,26 @@ const data = [
   // --- 10° Semestre ---
   { nombre: "Práctica Docente Final 2", sigla: "PRA701-56", semestre: 10, tipo: "linea-practica", creditos: 16, prerequisitos: ["PRA601-56"] }
 ];
+
+// Carga aprobados desde localStorage o inicia vacío
+const aprobados = new Set(JSON.parse(localStorage.getItem('aprobados')) || []);
+
 function aprobarRamo(sigla) {
   aprobados.add(sigla);
   localStorage.setItem('aprobados', JSON.stringify([...aprobados]));
   renderMalla();
 }
+
 function renderMalla() {
   const contenedor = document.getElementById("malla");
   contenedor.innerHTML = "";
+
   const semestres = [...new Set(data.map(r => r.semestre))].sort((a, b) => a - b);
 
   semestres.forEach(sem => {
     const bloque = document.createElement("div");
     bloque.className = "semestre";
+
     const titulo = document.createElement("h2");
     titulo.textContent = `Semestre ${sem}`;
     bloque.appendChild(titulo);
@@ -122,6 +129,8 @@ function renderMalla() {
 
         const btn = document.createElement("button");
         btn.textContent = "Aprobar ramo";
+
+        // El botón se habilita solo si se aprobaron todos los prerequisitos
         btn.disabled = !ramo.prerequisitos.every(sig => aprobados.has(sig));
 
         if (aprobados.has(ramo.sigla)) {
@@ -142,9 +151,5 @@ function renderMalla() {
   });
 }
 
-function aprobarRamo(sigla) {
-  aprobados.add(sigla);
-  renderMalla();
-}
-
 renderMalla();
+
