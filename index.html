@@ -5,6 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Malla Interactiva EPA</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #F4F4F4;
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #879C8F;
+      margin-bottom: 40px;
+    }
+
+    .semestre {
+      margin-bottom: 30px;
+      border-left: 6px solid #ADC8B7;
+      padding-left: 10px;
+    }
+
+    .semestre h2 {
+      color: #D4C896;
+    }
+
+    .ramo {
+      background-color: #FFFFFF;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .ramo label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .ramo input[type="checkbox"] {
+      transform: scale(1.2);
+      accent-color: #879C8F;
+    }
+
+    .ramo.activo {
+      background-color: #F6E8B0;
+      border-left: 5px solid #879C8F;
+    }
+
+    .ramo.bloqueado {
+      background-color: #E2D2C6;
+      opacity: 0.6;
+    }
+
+    em {
+      font-style: italic;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
   <h1>Malla Interactiva - Educación Parvularia</h1>
