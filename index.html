@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Interactiva EPA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Malla Interactiva - Educación Parvularia</h1>
+  <div id="malla"></div>
+
+  <script>
+    // Simulación de carga JSON (reemplazar por fetch si se carga desde archivo externo)
+    const malla = [
+      {
+        "nombre": "Introducción a la Educación Parvularia",
+        "sigla": "EPA 1124",
+        "semestre": "1°",
+        "creditos": "3",
+        "prerrequisitos": [],
+        "observaciones": ""
+      },
+      {
+        "nombre": "Desarrollo Infantil y Neurociencias",
+        "sigla": "EPA 1120",
+        "semestre": "1°",
+        "creditos": "3",
+        "prerrequisitos": [],
+        "observaciones": ""
+      },
+      {
+        "nombre": "Fundamentos de la Psicología del Aprendizaje Escolar",
+        "sigla": "PSI 300",
+        "semestre": "2°",
+        "creditos": "2",
+        "prerrequisitos": [],
+        "observaciones": ""
+      }
+      // Agrega más aquí...
+    ];
+
+    const aprobados = new Set();
+
+    function renderMalla() {
+      const container = document.getElementById("malla");
+      container.innerHTML = "";
+
+      const porSemestre = {};
+      malla.forEach(ramo => {
+        if (!porSemestre[ramo.semestre]) porSemestre[ramo.semestre] = [];
+        porSemestre[ramo.semestre].push(ramo);
+      });
+
+      Object.keys(porSemestre).sort().forEach(sem => {
+        const bloque = document.createElement("div");
+        bloque.className = "semestre";
+        bloque.innerHTML = `<h2>Semestre ${sem}</h2>`;
+
+        porSemestre[sem].forEach(ramo => {
+          const habilitado = ramo.prerrequisitos.every(req => aprobados.has(req));
+          const div = document.createElement("div");
+          div.className = `ramo ${habilitado ? "activo" : "bloqueado"}`;
+          div.innerHTML = `
+            <label>
+              <input type="checkbox" ${!habilitado ? "disabled" : ""} onchange="toggleAprobado('${ramo.sigla}')" ${aprobados.has(ramo.sigla) ? "checked" : ""}>
+              <strong>${ramo.sigla}</strong>: ${ramo.nombre} (${ramo.creditos} CR)
+              ${ramo.observaciones ? `<em> - ${ramo.observaciones}</em>` : ""}
+            </label>
+          `;
+          bloque.appendChild(div);
+        });
+
+        container.appendChild(bloque);
+      });
+    }
+
+    function toggleAprobado(sigla) {
+      if (aprobados.has(sigla)) {
+        aprobados.delete(sigla);
+      } else {
+        aprobados.add(sigla);
+      }
+      renderMalla();
+    }
+
+    renderMalla();
+  </script>
+</body>
+</html>
