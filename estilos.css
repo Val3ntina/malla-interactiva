@@ -1,81 +1,30 @@
 body {
-  background-color: #F4F4F4;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 2rem;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
-}
-
-.semestres {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  margin: 20px;
 }
 
 .semestre {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 1rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.semestre h2 {
-  width: 100%;
-  font-size: 1.3rem;
-  color: #444;
-  margin-bottom: 0.5rem;
+  border: 1px solid #aaa;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background: #f9f9f9;
 }
 
 .ramo {
-  padding: 1rem;
-  border-radius: 1rem;
-  width: 260px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  border: 2px solid transparent;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 4px;
 }
 
-.ramo button {
-  padding: 0.5rem;
-  border: none;
-  background-color: #ccc;
-  color: #fff;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.ramo.aprobado {
+  background: #d4edda;
+  border-color: #28a745;
 }
 
-.ramo.aprobado button {
-  background-color: #4CAF50;
+button {
+  margin-top: 5px;
+  padding: 5px 10px;
 }
-
-.ramo button:hover {
-  background-color: #999;
-}
-
-.ramo.locked {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* Colores pasteles según tipo */
-.ramo.linea-practica     { background-color: #ffe4e1; } /* rosado claro */
-.ramo.fundamental        { background-color: #dbeaff; } /* azul claro */
-.ramo.disciplinar        { background-color: #d8f3dc; } /* verde claro */
-.ramo.optativo           { background-color: #fff3cd; } /* amarillo claro */
-.ramo.religion           { background-color: #f3e5f5; } /* lila */
-.ramo.etica              { background-color: #fce4ec; } /* rosado pálido */
-.ramo.ingles             { background-color: #e0f7fa; } /* celeste agua */
-.ramo.final              { background-color: #ffecb3; } /* pastel final */
