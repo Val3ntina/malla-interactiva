@@ -114,3 +114,45 @@ function aprobarRamo(sigla) {
 }
 
 renderMalla();
+const aprobados = new Set();
+
+function renderMalla() {
+  const contenedor = document.getElementById("malla");
+  contenedor.innerHTML = "";
+  const semestres = [...new Set(data.map(r => r.semestre))].sort((a, b) => a - b);
+
+  semestres.forEach(sem => {
+    const bloque = document.createElement("div");
+    bloque.className = "semestre";
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Semestre ${sem}`;
+    bloque.appendChild(titulo);
+    data.filter(r => r.semestre === sem).forEach(ramo => {
+      const card = document.createElement("div");
+      card.className = `ramo ${ramo.tipo}`;
+      const nombre = document.createElement("div");
+      nombre.innerHTML = `<strong>${ramo.nombre}</strong><br>(${ramo.sigla})<br>CrÃ©ditos: ${ramo.creditos}`;
+      const btn = document.createElement("button");
+      btn.textContent = "Aprobar ramo";
+      btn.addEventListener("click", () => aprobarRamo(ramo.sigla));
+      card.appendChild(nombre);
+      card.appendChild(btn);
+      if (!ramo.prerequisitos.every(pr => aprobados.has(pr))) {
+        card.classList.add("locked");
+      }
+      if (aprobados.has(ramo.sigla)) {
+        card.classList.add("aprobado");
+        btn.textContent = "Aprobado âœ…";
+      }
+      bloque.appendChild(card);
+    });
+    contenedor.appendChild(bloque);
+  });
+}
+
+function aprobarRamo(sigla) {
+  aprobados.add(sigla);
+  renderMalla();
+}
+
+renderMalla();
